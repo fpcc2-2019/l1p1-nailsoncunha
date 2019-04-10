@@ -9,4 +9,3 @@ clima %>%
     mutate(mes = lubridate::month(semana), ano = lubridate::year(semana)) %>%
     write_csv(here::here("data/clima_cg_jp-semanal.csv"))
 
-
