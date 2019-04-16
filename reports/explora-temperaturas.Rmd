@@ -55,7 +55,7 @@ Com relação as temperaturas mínimas encontradas, é possível verificar que o
 climas %>%
     filter(ano >=1992) %>%
     ggplot(mapping = aes(x = ano, y = tmedia, color = cidade)) +
-        geom_jitter() +
+        geom_point() +
         labs(x = "Ano", y = "T. Média", color = "Cidade")
 
 ```
@@ -63,6 +63,9 @@ climas %>%
 O gráfico acima mostra que em relação a média das temperaturas, a temperatura de João Pessoa se mantêm acima da de Campina grande com maior frequência.
 Com base na visualização dos gráficos de temperaturas máximas, mínimas e média e considerando que a cidade mais quente é aquela que sustenta temperaturas consideradas altas na maior parte do tempo e com pouca variação, João Pessoa é mais quente que Campina Grande.
 
+### As temperaturas máximas semanais (o pico do calor) são tão diferentes quanto as médias? Mais? 
+
+### Quais os meses mais quentes e mais frios? 
 
 
 ### Qual foi o São João  mais frio de CG que está nos nossos dados?
@@ -79,16 +82,20 @@ Considerando que o São João mais frio foi aquele em que a temperatura média s
 
 ## Chuva
 
+### Quanto chove por semana em JP e CG?
+
 
 ### No geral, onde chove mais?
 ```{r}
 climas %>%
     ggplot(mapping = aes(x = cidade, y = chuva)) +
-        geom_jitter(alpha = .2) +
-        geom_point()
+        geom_boxplot(alpha = .2) 
+        #geom_point()
 ```
 
 Apesar das duas cidades terem uma grande concentração dos pontos nos valores baixos de chuva, os dados mostram que de uma forma geral chove mais em João Pessoa do que em Campina Grande.
+
+### Como é a distribuição do volume de chuvas por semana em JP e CG? A chuva varia mais ou menos que a temperatura? O formato da distribuição é igual? 
 
 ### A distribuição é diferente em meses específicos?
 ```{r}
@@ -96,10 +103,23 @@ climas %>%
     group_by(mes) %>%
     ggplot(mapping = aes(x = mes, y = chuva)) +
         geom_point() + 
-        coord_flip() +
+        geom_smooth() +
+        coord_flip() + 
         facet_wrap(~cidade)
 ```
 
 Para a cidade de Jõao Pessoa a distribuição apresenta uma diferença nos meses do meio do ano, como no mês 6 por exemplo, que chega a apresentar alguns pontos extremos. Dessa forma são vistos dois grupos, um com meses mais chuvosos, novamente referindo-se aos meses mais próximos do meior do ano (3,4,5,6 e 7) e outro grupo com os demais meses com uma quantidade menor de chuva.
 
 Já para a cidade de Campina Grande a distribuição dos dados não apresenta uma grande diferença de acordo com os meses.
+
+### Existe alguma tendencia de queda ou aumento de temperatura?
+
+```{r}
+climas %>%
+    filter(ano >=1992) %>%
+    ggplot(mapping = aes(x = semana, y = tmedia, color = cidade)) +
+        #geom_point() +
+        geom_smooth() +
+        labs(x = "Ano", y = "T. Média", color = "Cidade")
+
+```
